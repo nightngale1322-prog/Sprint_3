@@ -36,33 +36,36 @@ class OnlineSalesRegisterCollector:
     def check_amount (self, name):
         total = []
         for item in self.__name_items:
-           if item in self.__item_price:
+            if item in self.__item_price:
                total.append(self.__item_price[item])
-        return total
         if len(total) > 10:
-            total = total % 100 * 10
-
+                sum_total = sum(total) * 0.9
+        else: 
+                sum_total = sum(total)
+        return sum_total
     
     def twenty_percent_tax_calculation(self):
         twenty_percent_tax = []
         total = []
-        for item, tax_rate in self.__tax_rate.items():
-            if tax_rate == 20:
+
+        for item in self.__name_items:
+            if item in self.__tax_rate and self.__tax_rate[item] == 20:
                 twenty_percent_tax.append(item)
                 total.append(self.__item_price[item] * 0.2)
 
-            return total
+        return total
+
     
 
     def ten_percent_tax_calculation (self):
         ten_percent_tax = []
         total = []
-        for item, tax_rate in self.__tax_rate.items():
-            if tax_rate == 10:
+        for item in self.__name_items:
+            if item in self.__tax_rate and self.__tax_rate[item] == 10:
                 ten_percent_tax.append(item)
                 total.append(self.__item_price[item] * 0.1)
 
-            return total
+        return total
 
     def total_tax (self):
         return sum(self.ten_percent_tax_calculation() + self.twenty_percent_tax_calculation()) 
