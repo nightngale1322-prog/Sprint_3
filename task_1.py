@@ -33,15 +33,15 @@ class OnlineSalesRegisterCollector:
             self.__name_items.remove(name)
             self.__number_items -= 1
     
-    def check_amount (self, name):
+    def check_amount (self):
         total = []
-        for item in self.__name_items:
-            if item in self.__item_price:
-               total.append(self.__item_price[item])
+        for name in self.__name_items:
+            if name in self.__item_price:
+               total.append(self.__item_price[name])
         if len(total) > 10:
-                sum_total = sum(total) * 0.9
+            sum_total = sum(total) * 0.9
         else: 
-                sum_total = sum(total)
+            sum_total = sum(total)
         return sum_total
     
     def twenty_percent_tax_calculation(self):
@@ -52,8 +52,12 @@ class OnlineSalesRegisterCollector:
             if item in self.__tax_rate and self.__tax_rate[item] == 20:
                 twenty_percent_tax.append(item)
                 total.append(self.__item_price[item] * 0.2)
+        if len(twenty_percent_tax) > 10:
+            full_total = sum(total) * 0.9
+        else:
+            full_total = sum(total)
 
-        return total
+        return full_total
 
     
 
@@ -64,8 +68,12 @@ class OnlineSalesRegisterCollector:
             if item in self.__tax_rate and self.__tax_rate[item] == 10:
                 ten_percent_tax.append(item)
                 total.append(self.__item_price[item] * 0.1)
+        if len(ten_percent_tax) > 10:
+            full_total = sum(total) * 0.9
+        else:
+            full_total = sum(total)
 
-        return total
+        return full_total
 
     def total_tax (self):
         return sum(self.ten_percent_tax_calculation() + self.twenty_percent_tax_calculation()) 
